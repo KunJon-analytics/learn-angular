@@ -1,10 +1,10 @@
 <h2>Product List</h2>
 <ul>
   <li
-    *ngFor="let product of products | sort"
+    *ngFor="let product of products | sort; let i = index"
     (click)="selectedProduct = product"
   >
-    {{ product.name }}
+    <hinv-product-view [id]="i"></hinv-product-view>
   </li>
 </ul>
 
@@ -15,6 +15,5 @@
 ></hinv-product-detail>
 
 <ng-template #noProduct><p>No product selected!</p></ng-template>
-<p appCopyright></p>
-<h3>Offers</h3>
-<ng-template hinvProductHost></ng-template>
+<h2>Favorites</h2>
+<hinv-favorites></hinv-favorites>

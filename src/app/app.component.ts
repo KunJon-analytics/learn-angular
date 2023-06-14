@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { RoomsComponent } from './rooms/rooms.component';
+import { APP_CONFIG, AppConfig, appSettings } from './app.config';
 
 @Component({
   selector: 'hinv-root',
@@ -14,6 +16,7 @@ import { RoomsComponent } from './rooms/rooms.component';
   //   <p>Angular is awesome</p>`,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [{ provide: APP_CONFIG, useValue: appSettings }],
 })
 export class AppComponent implements OnInit {
   title = 'hotelinventoryapp';
@@ -21,6 +24,8 @@ export class AppComponent implements OnInit {
   description = 'learning a new skill';
 
   @ViewChild('name', { static: true }) name!: ElementRef;
+
+  constructor(@Inject(APP_CONFIG) config: AppConfig) {}
 
   // @ViewChild('user', { read: ViewContainerRef })
   // vcr!: ViewContainerRef;
