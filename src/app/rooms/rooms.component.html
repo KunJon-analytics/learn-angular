@@ -1,1 +1,23 @@
-<p>rooms works!</p>
+<hinv-header></hinv-header>
+<hinv-header></hinv-header>
+<hinv-header></hinv-header>
+<h1>Welcome to {{ hotelName }}</h1>
+<div [hidden]="hideRooms">
+  Number of Rooms:
+  <div
+    [innerText]="numberOfRooms"
+    [ngStyle]="{ color: rooms.availableRooms > 50 ? 'red' : 'green' }"
+  ></div>
+</div>
+<div *ngIf="selectedRoom">{{ selectedRoom | json }}</div>
+
+<div><button (click)="addRoom()">Add room</button></div>
+
+<div *ngIf="hideRooms">
+  <hinv-rooms-list
+    [rooms]="roomList"
+    [title]="title"
+    (roomSelected)="selectRoom($event)"
+  ></hinv-rooms-list>
+</div>
+<button (click)="toggle()">Toggle</button>

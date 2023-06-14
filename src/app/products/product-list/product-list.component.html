@@ -1,0 +1,20 @@
+<h2>Product List</h2>
+<ul>
+  <li
+    *ngFor="let product of products | sort"
+    (click)="selectedProduct = product"
+  >
+    {{ product.name }}
+  </li>
+</ul>
+
+<hinv-product-detail
+  [product]="selectedProduct"
+  (bought)="onBuy()"
+  *ngIf="selectedProduct; else noProduct"
+></hinv-product-detail>
+
+<ng-template #noProduct><p>No product selected!</p></ng-template>
+<p appCopyright></p>
+<h3>Offers</h3>
+<ng-template hinvProductHost></ng-template>
