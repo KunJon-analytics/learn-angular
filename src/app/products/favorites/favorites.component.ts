@@ -14,7 +14,13 @@ export class FavoritesComponent implements OnInit {
 
   constructor(private productService: ProductsService) {}
 
+  private getProducts() {
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
+  }
+
   ngOnInit(): void {
-    this.products = this.productService?.getProducts();
+    this.getProducts();
   }
 }

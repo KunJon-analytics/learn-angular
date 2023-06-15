@@ -14,6 +14,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './AppConfig/appconfig.service';
 import { NumericDirective } from './numeric.directive';
 import { PermissionDirective } from './permission.directive';
+import { KeyLoggerComponent } from './key-logger/key-logger.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PermissionDirective } from './permission.directive';
     EmployeeComponent,
     NumericDirective,
     PermissionDirective,
+    KeyLoggerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, ProductsModule],
   providers: [{ provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG }],

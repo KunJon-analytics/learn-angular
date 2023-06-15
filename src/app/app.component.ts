@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { Observable, from } from 'rxjs';
 import { RoomsComponent } from './rooms/rooms.component';
 import { APP_CONFIG, AppConfig, appSettings } from './app.config';
 
@@ -23,14 +24,41 @@ export class AppComponent implements OnInit {
   user = 'admin';
   description = 'learning a new skill';
 
-  @ViewChild('name', { static: true }) name!: ElementRef;
+  title$ = new Observable((observer) => {
+    setInterval(() => {
+      observer.next();
+    }, 2000);
+  });
 
-  constructor(@Inject(APP_CONFIG) config: AppConfig) {}
+  @ViewChild('name', { static: true }) name!: ElementRef;
 
   // @ViewChild('user', { read: ViewContainerRef })
   // vcr!: ViewContainerRef;
 
   ngOnInit(): void {}
+
+  private setTitle = () => {
+    const timestamp = new Date().getMilliseconds();
+    this.title = `Learning Angular (${timestamp})`;
+  };
+
+  private changeTitle(callback: Function) {
+    setTimeout(() => {
+      callback();
+    }, 3000);
+  }
+
+  private onComplete() {
+    return new Promise<void>((resolve) => {
+      setInterval(() => {
+        resolve();
+      }, 2000);
+    });
+  }
+
+  constructor() {
+    this.title$.subscribe(this.setTitle);
+  }
 
   // ngAfterViewInit(): void {
   //   const componentRef = this.vcr.createComponent(RoomsComponent);

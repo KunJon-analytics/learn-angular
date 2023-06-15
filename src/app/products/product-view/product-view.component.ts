@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ProductViewService } from './product-view.service';
 
 @Component({
@@ -7,16 +8,29 @@ import { ProductViewService } from './product-view.service';
   styleUrls: ['./product-view.component.scss'],
   providers: [ProductViewService],
 })
-export class ProductViewComponent implements OnInit {
+export class ProductViewComponent implements OnInit, OnDestroy {
   name = '';
   @Input() id = -1;
+  private productSub = new Subject<void>();
 
   constructor(private productViewService: ProductViewService) {}
+  ngOnDestroy(): void {
+    this.productSub.next();
+    this.productSub.complete();
+  }
+
+  private getProduct() {
+    this.productViewService
+      .getProduct(this.id)
+      .pipe(takeUntil(this.productSub))
+      .subscribe((product) => {
+        if (product) {
+          this.name = product.name;
+        }
+      });
+  }
 
   ngOnInit(): void {
-    const product = this.productViewService.getProduct(this.id);
-    if (product) {
-      this.name = product.name;
-    }
+    this.getProduct();
   }
 }
