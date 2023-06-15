@@ -1,19 +1,20 @@
 <h2>Product List</h2>
 <ul>
   <li
-    *ngFor="let product of (products$ | async)! | sort; let i = index"
+    *ngFor="let product of products | sort; let i = index"
     (click)="selectedProduct = product"
   >
-    <hinv-product-view [id]="i"></hinv-product-view>
+    {{ product.name }}
   </li>
 </ul>
 
 <hinv-product-detail
-  [product]="selectedProduct"
+  [id]="selectedProduct.id"
   (bought)="onBuy()"
+  (deleted)="onDelete()"
   *ngIf="selectedProduct; else noProduct"
 ></hinv-product-detail>
 
 <ng-template #noProduct><p>No product selected!</p></ng-template>
-<h2>Favorites</h2>
-<hinv-favorites></hinv-favorites>
+
+<hinv-product-create (added)="onAdd($event)"></hinv-product-create>

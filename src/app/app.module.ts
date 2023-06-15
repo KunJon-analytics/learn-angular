@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsModule } from './products/products.module';
@@ -15,6 +15,8 @@ import { APP_CONFIG, APP_SERVICE_CONFIG } from './AppConfig/appconfig.service';
 import { NumericDirective } from './numeric.directive';
 import { PermissionDirective } from './permission.directive';
 import { KeyLoggerComponent } from './key-logger/key-logger.component';
+import { AuthModule } from './auth/auth.module';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,17 @@ import { KeyLoggerComponent } from './key-logger/key-logger.component';
     PermissionDirective,
     KeyLoggerComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ProductsModule],
-  providers: [{ provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG }],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ProductsModule,
+    AuthModule,
+  ],
+  providers: [
+    { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
