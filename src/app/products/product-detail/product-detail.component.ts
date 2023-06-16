@@ -5,9 +5,9 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 import { ProductsService } from '../products.service';
 import { Product } from '../product';
 import { AuthService } from '../../auth/auth.service';
@@ -28,14 +28,19 @@ export class ProductDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private productService: ProductsService,
-    public authService: AuthService
+    public authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnChanges(): void {
     this.product$ = this.productService.getProduct(this.id);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.product$ = this.route.data.pipe(
+      switchMap((data) => of(data['product']))
+    );
+  }
 
   buy() {
     this.bought.emit(this.product?.name);

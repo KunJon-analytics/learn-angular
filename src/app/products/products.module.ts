@@ -7,6 +7,7 @@ import { CopyrightDirective } from './copyright.directive';
 import { ProductHostDirective } from './product-host.directive';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductsRoutingModule } from './products-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ProductCreateComponent } from './product-create/product-create.componen
     ProductViewComponent,
     ProductCreateComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, ProductsRoutingModule],
   exports: [ProductListComponent],
 })
 export class ProductsModule {}

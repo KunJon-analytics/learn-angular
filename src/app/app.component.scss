@@ -1,5 +1,12 @@
-.copyright {
-  background-color: lightgray;
-  padding: 10px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+a {
+  color: #1976d2;
+  text-decoration: none;
+  margin: 5px;
+}
+a:hover {
+  opacity: 0.8;
+}
+
+.active {
+  color: black;
 }
