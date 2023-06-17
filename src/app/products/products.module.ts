@@ -8,6 +8,7 @@ import { ProductHostDirective } from './product-host.directive';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductsRoutingModule } from './products-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,12 @@ import { ProductsRoutingModule } from './products-routing.module';
     ProductViewComponent,
     ProductCreateComponent,
   ],
-  imports: [CommonModule, ProductsRoutingModule],
+  imports: [
+    CommonModule,
+    ProductsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [ProductListComponent],
 })
 export class ProductsModule {}

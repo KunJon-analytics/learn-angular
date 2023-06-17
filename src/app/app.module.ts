@@ -11,6 +11,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { CartComponent } from './cart/cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, CartComponent, PageNotFoundComponent],
@@ -20,6 +22,8 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
+    ReactiveFormsModule,
+    CommonModule,
   ],
   providers: [
     { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },

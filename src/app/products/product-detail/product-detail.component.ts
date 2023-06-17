@@ -11,6 +11,7 @@ import { Observable, of, switchMap } from 'rxjs';
 import { ProductsService } from '../products.service';
 import { Product } from '../product';
 import { AuthService } from '../../auth/auth.service';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'hinv-product-detail',
@@ -19,6 +20,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class ProductDetailComponent implements OnInit, OnChanges {
   @Input() product: Product | undefined;
+  price: number | undefined;
   @Input() id = -1;
   product$: Observable<Product> | undefined;
 
@@ -29,7 +31,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   constructor(
     private productService: ProductsService,
     public authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService
   ) {}
 
   ngOnChanges(): void {
@@ -42,8 +45,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     );
   }
 
-  buy() {
-    this.bought.emit(this.product?.name);
+  buy(product: Product) {
+    this.cartService.addProduct(product);
   }
 
   changePrice(product: Product, price: number) {
