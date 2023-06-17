@@ -3,6 +3,7 @@ import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { priceRangeValidator } from '../price-range.directive';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'hinv-product-create',
@@ -24,6 +25,12 @@ export class ProductCreateComponent implements OnInit {
       validators: [Validators.required, priceRangeValidator()],
     }),
   });
+
+  products: Product[] = [];
+
+  categories = ['Hardware', 'Computers', 'Clothing', 'Software'];
+
+  products$: Observable<Product[]> | undefined;
 
   constructor(private productsService: ProductsService) {}
 
@@ -49,5 +56,14 @@ export class ProductCreateComponent implements OnInit {
         this.showPriceRangeHint = price > 1 && price < 10000;
       }
     });
+    this.productsService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
+
+    this.products$ = this.name.valueChanges.pipe(
+      map((name) =>
+        this.products.filter((product) => product.name.startsWith(name))
+      )
+    );
   }
 }

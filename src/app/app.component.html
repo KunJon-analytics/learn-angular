@@ -1,8 +1,12 @@
 <!-- <hinv-auth></hinv-auth>
 <hinv-product-list></hinv-product-list> -->
 
-<hinv-auth></hinv-auth>
-<a routerLink="/products" routerLinkActive="active">Products</a>
-<a routerLink="/cart" routerLinkActive="active">Cart</a>
-<a routerLink="/about" routerLinkActive="active">About Us</a>
+<mat-toolbar color="primary">
+  <span>My e-shop</span>
+  <span class="spacer"></span>
+  <a mat-flat-button color="primary" routerLink="/products">Products</a>
+  <a mat-flat-button color="primary" routerLink="/cart">Cart</a>
+  <a mat-flat-button color="primary" routerLink="/about">About Us</a>
+  <hinv-auth></hinv-auth>
+</mat-toolbar>
 <router-outlet></router-outlet>

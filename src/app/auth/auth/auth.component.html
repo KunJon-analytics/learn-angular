@@ -1,9 +1,14 @@
 <button
-  [hidden]="authService.isLoggedIn"
+  mat-raised-button
+  *ngIf="!authService.isLoggedIn"
   (click)="authService.login().subscribe()"
 >
   Login
 </button>
-<button [hidden]="!authService.isLoggedIn" (click)="authService.logout()">
+<button
+  mat-raised-button
+  *ngIf="authService.isLoggedIn"
+  (click)="authService.logout()"
+>
   Logout
 </button>

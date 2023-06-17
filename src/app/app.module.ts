@@ -13,6 +13,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [AppComponent, CartComponent, PageNotFoundComponent],
@@ -24,6 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthModule,
     ReactiveFormsModule,
     CommonModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatToolbarModule,
   ],
   providers: [
     { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },

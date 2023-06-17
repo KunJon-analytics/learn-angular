@@ -7,11 +7,13 @@ import {
   OnChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import { filter, Observable, of, switchMap } from 'rxjs';
 import { ProductsService } from '../products.service';
 import { Product } from '../product';
 import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../../cart/cart.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PriceComponent } from '../price/price.component';
 
 @Component({
   selector: 'hinv-product-detail',
@@ -32,7 +34,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     private productService: ProductsService,
     public authService: AuthService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private dialog: MatDialog
   ) {}
 
   ngOnChanges(): void {
@@ -49,10 +52,19 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     this.cartService.addProduct(product);
   }
 
-  changePrice(product: Product, price: number) {
-    this.productService.updateProduct(product.id, price).subscribe(() => {
-      alert(`The price of ${product.name} was changed!`);
-    });
+  changePrice(product: Product) {
+    this.dialog
+      .open(PriceComponent, { data: product.price })
+      .afterClosed()
+      .pipe(
+        filter((price) => !!price),
+        switchMap((price) =>
+          this.productService.updateProduct(product.id, price)
+        )
+      )
+      .subscribe(() => {
+        alert(`The price of ${product.name} was changed!`);
+      });
   }
 
   remove(product: Product) {
